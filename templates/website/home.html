@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="home" class="hero-section">
+    <div class="container hero-content" data-aos="zoom-in">
+        <div class="floating-anim mb-4">
+            <i class="fas fa-rocket fa-4x text-primary"></i>
+        </div>
+        <h1 class="display-1 fw-bold mb-4">
+            {% if LANGUAGE_CODE == 'ar' %}{{ settings.hero_title_ar }}{% else %}{{ settings.hero_title_en }}{% endif %}
+        </h1>
+        <p class="lead fs-2 mb-5 opacity-75">
+            {% if LANGUAGE_CODE == 'ar' %}{{ settings.hero_subtitle_ar }}{% else %}{{ settings.hero_subtitle_en }}{% endif %}
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="#contact" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg">{% trans "ابدأ رحلتك معنا" %}</a>
+            <a href="#projects" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">{% trans "شاهد أعمالنا" %}</a>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section (Vertical Grid) -->
+<section id="services" class="section-padding bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="fw-bold display-5">{% trans "خدماتنا" %}</h2>
+            <div class="bg-primary mx-auto mt-3" style="width: 80px; height: 4px;"></div>
+        </div>
+        <div class="row g-4">
+            {% for service in services %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                <div class="card card-custom h-100 p-4">
+                    <div class="text-primary fs-1 mb-4"><i class="{{ service.icon_class }}"></i></div>
+                    <h3 class="fw-bold mb-3">
+                        {% if LANGUAGE_CODE == 'ar' %}{{ service.title_ar }}{% else %}{{ service.title_en }}{% endif %}
+                    </h3>
+                    <p class="text-muted">
+                        {% if LANGUAGE_CODE == 'ar' %}{{ service.description_ar }}{% else %}{{ service.description_en }}{% endif %}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section (Horizontal Slider) -->
+<section id="projects" class="section-padding bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="fw-bold display-4">{% trans "آخر أعمالنا" %}</h2>
+            <p class="text-muted fs-5">{% trans "مشاريع برمجية مبتكرة بأعلى المعايير العالمية" %}</p>
+        </div>
+    </div>
+    <div class="container-fluid px-4">
+        <div class="swiper projectSlider" data-aos="fade-up">
+            <div class="swiper-wrapper">
+                {% for project in projects %}
+                <div class="swiper-slide" style="width: 400px;">
+                    <div class="project-card">
+                        <img src="{{ project.image.url }}" class="project-img" alt="{{ project.title_ar }}">
+                        <div class="p-4">
+                            <span class="badge bg-primary mb-3">
+                                {% if LANGUAGE_CODE == 'ar' %}{{ project.category_ar }}{% else %}{{ project.category_en }}{% endif %}
+                            </span>
+                            <h4 class="fw-bold">
+                                {% if LANGUAGE_CODE == 'ar' %}{{ project.title_ar }}{% else %}{{ project.title_en }}{% endif %}
+                            </h4>
+                            <p class="text-muted">
+                                {% if LANGUAGE_CODE == 'ar' %}{{ project.description_ar|truncatewords:15 }}{% else %}{{ project.description_en|truncatewords:15 }}{% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="section-padding bg-dark text-white overflow-hidden">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="fw-bold display-4">{% trans "شهادات العملاء" %}</h2>
+            <p class="text-white-50">{% trans "ثقة عملائنا هي سر نجاحنا" %}</p>
+        </div>
+        <div class="swiper testimonialSlider" data-aos="zoom-in">
+            <div class="swiper-wrapper">
+                {% for t in testimonials %}
+                <div class="swiper-slide h-auto">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left fa-3x text-primary mb-4 opacity-50"></i>
+                        <p class="fs-5 mb-4 lh-lg">
+                            {% if LANGUAGE_CODE == 'ar' %}{{ t.content_ar }}{% else %}{{ t.content_en }}{% endif %}
+                        </p>
+                        <div class="d-flex align-items-center mt-auto">
+                            {% if t.image %}<img src="{{ t.image.url }}" class="rounded-circle me-3" width="60" height="60" style="object-fit: cover;">{% endif %}
+                            <div>
+                                <h5 class="fw-bold mb-0 text-primary">{% if LANGUAGE_CODE == 'ar' %}{{ t.name_ar }}{% else %}{{ t.name_en }}{% endif %}</h5>
+                                <small class="text-white-50">{% if LANGUAGE_CODE == 'ar' %}{{ t.position_ar }}{% else %}{{ t.position_en }}{% endif %}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination position-relative mt-5"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="zoom-in">
+                <div class="card card-custom p-5">
+                    <h2 class="text-center fw-bold mb-5">{% trans "تواصل معنا" %}</h2>
+                    <form action="{% url 'contact' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <input type="text" name="name" class="form-control py-3" placeholder="{% trans 'الاسم' %}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" name="email" class="form-control py-3" placeholder="{% trans 'البريد الإلكتروني' %}" required>
+                            </div>
+                            <div class="col-12">
+                                <input type="text" name="subject" class="form-control py-3" placeholder="{% trans 'الموضوع' %}" required>
+                            </div>
+                            <div class="col-12">
+                                <textarea name="message" class="form-control py-3" rows="5" placeholder="{% trans 'رسالتك' %}" required></textarea>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-pill">{% trans "إرسال" %}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<div class="ratio ratio-21x9">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114382.7226532452!2d50.04648785!3d26.371387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49e87900f6f477%3A0x60098006e897585!2sDammam%20Saudi%20Arabia!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+</div>
+<<!-- Contact Info Footer -->
+<section class="contact-info-section py-4 bg-dark text-white">
+    <div class="container text-center">
+
+        <h5 class="fw-bold mb-3">
+            {% trans "تواصل معنا" %}
+        </h5>
+
+        <div class="row justify-content-center g-3">
+
+            <!-- Phone -->
+            <div class="col-md-3 col-6">
+                <div class="p-3 rounded-4 bg-secondary bg-opacity-25">
+
+                    <i class="fas fa-phone text-primary mb-2"></i>
+
+                    <h6 class="mb-2">
+                        {% trans "الجوال" %}
+                    </h6>
+
+                    <a href="tel:{{ settings.phone }}"
+                       class="text-white text-decoration-none small">
+
+                        {{ settings.phone }}
+
+                    </a>
+
+                </div>
+            </div>
+
+
+            <!-- Email -->
+            <div class="col-md-3 col-6">
+
+                <div class="p-3 rounded-4 bg-secondary bg-opacity-25">
+
+                    <i class="fas fa-envelope text-warning mb-2"></i>
+
+                    <h6 class="mb-2">
+                        {% trans "البريد" %}
+                    </h6>
+
+                    <a href="mailto:{{ settings.email }}"
+                       class="text-white text-decoration-none small">
+
+                        {{ settings.email }}
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- WhatsApp -->
+            <div class="col-md-3 col-6">
+
+                <div class="p-3 rounded-4 bg-secondary bg-opacity-25">
+
+                    <i class="fab fa-whatsapp text-success fa-lg mb-2"></i>
+
+                    <h6 class="mb-2">
+                        {% trans "واتساب" %}
+                    </h6>
+
+                    <a href="https://wa.me/{{ settings.whatsapp }}"
+                       target="_blank"
+                       class="btn btn-success btn-sm rounded-pill px-3">
+
+                        {% trans "راسلنا" %}
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Small Floating WhatsApp -->
+
+<a href="https://wa.me/{{ settings.whatsapp }}"
+   class="whatsapp-floating-small"
+   target="_blank"
+   aria-label="WhatsApp">
+
+    <i class="fab fa-whatsapp"></i>
+
+</a>
+{% endblock %}

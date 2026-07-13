@@ -1,0 +1,277 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{% if LANGUAGE_CODE == 'ar' %}{{ settings.site_name_ar }}{% else %}{{ settings.site_name_en }}{% endif %}</title>
+    <meta name="description" content="{% if LANGUAGE_CODE == 'ar' %}{{ settings.hero_subtitle_ar }}{% else %}{{ settings.hero_subtitle_en }}{% endif %}">
+    <meta name="keywords" content="برمجيات، تصميم مواقع، تطبيقات جوال، الدمام، السعودية، سلة، زد، علي القفيلي">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    
+   <!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+
+  "name": "{% if LANGUAGE_CODE == 'ar' %}{{ settings.site_name_ar }}{% else %}{{ settings.site_name_en }}{% endif %}",
+
+  "url": "{{ request.build_absolute_uri }}",
+
+  "description": "{% if LANGUAGE_CODE == 'ar' %}{{ settings.hero_subtitle_ar }}{% else %}{{ settings.hero_subtitle_en }}{% endif %}",
+
+
+  "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/logo.png' %}",
+
+
+  "address": {
+
+    "@type": "PostalAddress",
+
+    "streetAddress": "{% if LANGUAGE_CODE == 'ar' %}{{ settings.address_ar }}{% else %}{{ settings.address_en }}{% endif %}",
+
+    "addressLocality": "Dammam",
+
+    "addressRegion": "Eastern Province",
+
+    "addressCountry": "SA"
+
+  },
+
+
+  "telephone": "{{ settings.phone }}",
+
+
+  "email": "{{ settings.email }}",
+
+
+  "contactPoint": {
+
+    "@type": "ContactPoint",
+
+    "telephone": "{{ settings.phone }}",
+
+    "contactType": "customer service",
+
+    "availableLanguage": [
+      "Arabic",
+      "English"
+    ]
+
+  },
+
+
+  "sameAs": [
+
+    "{{ settings.facebook }}",
+
+    "{{ settings.linkedin }}"
+
+  ],
+
+
+  "areaServed": "Saudi Arabia",
+
+
+  "serviceType": [
+
+    "تصميم المواقع",
+
+    "برمجة التطبيقات",
+
+    "المتاجر الإلكترونية",
+
+    "الحلول البرمجية"
+
+  ]
+
+}
+</script>
+    
+    <!-- CSS Frameworks -->
+    {% if LANGUAGE_CODE == 'ar' %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    {% else %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    {% endif %}
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #003d99;
+            --dark-color: #1a1a1a;
+        }
+        body {
+            font-family: {% if LANGUAGE_CODE == 'ar' %}'Cairo'{% else %}'Poppins'{% endif %}, sans-serif;
+            overflow-x: hidden;
+        }
+        .navbar {
+            transition: all 0.3s ease;
+            padding: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("{% static 'img/hero_bg.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.3;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .floating-anim {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .section-padding { padding: 100px 0; }
+        .card-custom {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .card-custom:hover { transform: translateY(-10px); }
+        .swiper-container { width: 100%; padding: 50px 0; }
+        .footer { background: var(--dark-color); color: white; padding: 80px 0 20px; }
+        
+        /* Projects Slider Styling */
+        .projectSlider {
+            padding: 50px 0;
+        }
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            height: 100%;
+        }
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+        }
+        .project-img {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .testimonial-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 25px;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary fs-3" href="/">
+                {% if LANGUAGE_CODE == 'ar' %}{{ settings.site_name_ar }}{% else %}{{ settings.site_name_en }}{% endif %}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav {% if LANGUAGE_CODE == 'ar' %}ms-auto{% else %}me-auto{% endif %}">
+                    <li class="nav-item"><a class="nav-link" href="#home">{% trans "الرئيسية" %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">{% trans "خدماتنا" %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">{% trans "أعمالنا" %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">{% trans "الأسعار" %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">{% trans "تواصل معنا" %}</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                        <select name="language" onchange="this.form.submit()" class="form-select form-select-sm">
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                    {{ language.name_local }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <footer class="footer">
+        <div class="container text-center">
+            <h3 class="fw-bold mb-4">{% if LANGUAGE_CODE == 'ar' %}{{ settings.site_name_ar }}{% else %}{{ settings.site_name_en }}{% endif %}</h3>
+            <p class="mb-5">{% if LANGUAGE_CODE == 'ar' %}{{ settings.address_ar }}{% else %}{{ settings.address_en }}{% endif %}</p>
+            <div class="social-links mb-5">
+                <a href="#" class="text-white mx-3 fs-4"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-white mx-3 fs-4"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white mx-3 fs-4"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <hr class="bg-light">
+            <p class="mt-4">© 2026. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        
+        // Projects Horizontal Slider
+        new Swiper(".projectSlider", {
+            slidesPerView: "auto",
+            spaceBetween: 30,
+            centeredSlides: true,
+            loop: true,
+            autoplay: { delay: 2500, disableOnInteraction: false },
+            pagination: { el: ".swiper-pagination", clickable: true },
+        });
+
+        // Testimonials Slider
+        new Swiper(".testimonialSlider", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            breakpoints: {
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 }
+            }
+        });
+    </script>
+</body>
+</html>
